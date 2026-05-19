@@ -7,9 +7,25 @@ function submitHomework(){
   if(studentName === "" || subject === "" || !file){
 
     alert("Please fill all fields!");
-
     return;
   }
+
+  let submission = {
+    name: studentName,
+    subject: subject,
+    file: file.name,
+    status: "Submitted"
+  };
+
+  let submissions =
+    JSON.parse(localStorage.getItem("submissions")) || [];
+
+  submissions.push(submission);
+
+  localStorage.setItem(
+    "submissions",
+    JSON.stringify(submissions)
+  );
 
   document.getElementById("result").innerHTML = `
 
@@ -17,15 +33,12 @@ function submitHomework(){
       Homework Submitted Successfully ✅
     </h3>
 
-    <br>
-
-    <p><strong>Student Name:</strong> ${studentName}</p>
+    <p><strong>Student:</strong> ${studentName}</p>
 
     <p><strong>Subject:</strong> ${subject}</p>
 
-    <p><strong>Uploaded File:</strong> ${file.name}</p>
-
-    <p><strong>Status:</strong> Submitted</p>
+    <p><strong>File:</strong> ${file.name}</p>
 
   `;
+
 }
